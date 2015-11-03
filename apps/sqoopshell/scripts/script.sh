@@ -2,7 +2,7 @@ echo "I AM: `whoami`"
 echo "Running On: `hostname`"
 echo "CWD: `pwd`"
 echo "Can I see these clients? Hive = `which hive`, Sqoop = `which sqoop`"
-echo "`ls -l /usr/hdp/current/ | head -n 5`"
+echo "`ls -l /usr/hdp/current/sqoop-client/ | head -n 5`"
 # sqoop list-tables --connect jdbc:postgresql://sandbox.hortonworks.com/ambari --username ambari -password bigdata
 
 # yarn user executes the sqoop command, naturally yarn user has no access to /user/root directory that will contain the staging directory 
