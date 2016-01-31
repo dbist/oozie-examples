@@ -15,9 +15,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<workflow-app xmlns="uri:oozie:workflow:0.4" name="python-wf">
-    <start to="python-node"/>
-    <action name="python-node">
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="python3-wf">
+    <start to="python3-node"/>
+    <action name="python3-node">
         <shell xmlns="uri:oozie:shell-action:0.2">
             <job-tracker>${jobTracker}</job-tracker>
             <name-node>${nameNode}</name-node>
@@ -35,7 +35,7 @@
         <error to="fail"/>
     </action>
     <kill name="fail">
-        <message>Python action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+        <message>Python3 action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
     </kill>
     <end name="end"/>
 </workflow-app>
