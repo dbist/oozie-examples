@@ -9,8 +9,9 @@ create 'tableA' 'cf'
 ##### create a snapshot using
 ```
 snapshot 'tableA', 'tableA-snapshot-2016-05-03'
+list_snapshots
 ```
-##### now execute as user guest
+##### now upload the workflow and execute as user guest
 ```
 su guest
 hdfs dfs -put oozie ./

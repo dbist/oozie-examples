@@ -27,9 +27,9 @@
                     <value>${queueName}</value>
                 </property>
             </configuration>
-            <exec>snapshot.sh</exec>
+            <exec>export_snapshot.sh</exec>
 		<env-var>HADOOP_USER_NAME=${wf:user()}</env-var>
-	    <file>scripts/snapshot.sh</file> 	
+	    <file>scripts/export_snapshot.sh</file> 	
             <capture-output/>
         </shell>
         <ok to="end"/>
