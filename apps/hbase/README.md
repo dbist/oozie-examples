@@ -4,7 +4,7 @@
 
 ##### this script assumes you have an hbase table called tableA
 ```
-create 'tableA' 'cf'
+create 'tableA', 'cf'
 ```
 ##### create a snapshot using
 ```
