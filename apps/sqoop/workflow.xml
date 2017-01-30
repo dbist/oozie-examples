@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="sqoop-wf">
+    <global/>
+    <start to="sqoop"/>
+    <action name="sqoop">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>import --connect jdbc:mysql://sandbox.hortonworks.com/test --username guest --password-file /user/guest/.password --table wfd --split-by rowkey --hive-import --hcatalog-table -m 1</command>
+<!--            <file>lib/hive-site.xml</file> -->
+        </sqoop>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
