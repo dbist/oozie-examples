@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="spark-wf">
+    <start to="spark-node"/>
+    <action name="spark-node">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <master>yarn-cluster</master>
+            <name>Spark Example</name>
+            <jar>lib/spark-examples-1.6.3.2.6.0.0-422-hadoop2.7.3.2.6.0.0-422.jar</jar>
+            <spark-opts>--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1 --conf spark.yarn.historyServer.address=http://wfmanager-test-1.openstacklocal:18088 --conf spark.eventLog.dir=hdfs:///spark-history --conf spark.eventLog.enabled=true</spark-opts>
+        </spark>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
