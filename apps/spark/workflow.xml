@@ -14,7 +14,6 @@
             <jar>${nameNode}/user/centos/spark-action/lib/oozie-examples.jar</jar>
             <arg>${nameNode}/user/centos/input-data/text/data.txt</arg>
             <arg>${nameNode}/user/centos/output-data/spark</arg>
-            <file>${nameNode}/user/centos/spark-action/lib/oozie-examples.jar</file>
         </spark>
         <ok to="end"/>
         <error to="kill"/>
