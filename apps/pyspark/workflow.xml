@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="PySpark-Action">
+    <start to="pyspark"/>
+    <action name="pyspark">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <prepare>
+                <delete path="hdfs://mycluster/user/aervits/pyspark-output"/>
+            </prepare>
+            <master>yarn-cluster</master>
+            <name>PySparkExample</name>
+            <jar>${nameNode}/user/${wf:user()}/oozie/pyspark/lib/counts.py</jar>
+            <spark-opts>--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1</spark-opts>
+            <arg>hdfs://mycluster/user/aervits/examples/input-data/text/</arg>
+            <arg>hdfs://mycluster/user/aervits/pyspark-output</arg>
+        </spark>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

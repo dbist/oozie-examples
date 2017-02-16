@@ -1,0 +1,9 @@
+Name    Value
+oozie.use.system.libpath        true
+oozie.wf.application.path       hdfs://mycluster/user/aervits/oozie/pyspark/workflow.xml
+user.name       aervits
+jobTracker      bugbash-r6-oozie-ha-1-5.openstacklocal:8050
+oozie.wf.rerun.failnodes        true
+mapreduce.job.user.name         aervits
+resourceManager         bugbash-r6-oozie-ha-1-5.openstacklocal:8050
+nameNode        hdfs://mycluster
