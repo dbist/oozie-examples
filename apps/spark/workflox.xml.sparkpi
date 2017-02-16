@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="Spark-Action">
+    <start to="spark"/>
+    <action name="spark">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <master>yarn-cluster</master>
+            <name>SparkPi</name>
+            <class>org.apache.spark.examples.SparkPi</class>
+            <jar>${nameNode}/user/${wf:user()}/oozie/spark/lib/spark-examples-1.6.3.2.6.0.0-502-hadoop2.7.3.2.6.0.0-502.jar</jar>
+            <spark-opts>--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1</spark-opts>
+            <arg>10</arg>
+        </spark>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
