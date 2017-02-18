@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="Workflow1">
+    <start to="sqoop-import"/>
+    <action name="sqoop-import">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>oozie.share.lib.for.sqoop</name>
+                    <value>hive,hcatalog,sqoop</value>
+                </property>
+            </configuration>
+            <command>import --connect jdbc:mysql://172.22.65.123/test --username centos --password-file /user/centos/.password --table imported --hcatalog-table imported --hcatalog-home /usr/hdp/current/hive-webhcat --map-column-hive value=STRING --split-by rowkey</command>
+            <file>/user/centos/sqoop/lib/hive-site.xml</file>
+            <file>/user/centos/sqoop/lib/tez-site.xml</file>
+        </sqoop>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
