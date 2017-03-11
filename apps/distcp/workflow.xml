@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="distcp">
+    <start to="distcp_1"/>
+    <action name="distcp_1">
+        <distcp xmlns="uri:oozie:distcp-action:0.2">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+<!--
+	    <configuration>
+                <property>
+		    <name>oozie.launcher.mapreduce.job.hdfs-servers</name>
+		    <value>${nameNode},${nameNode2}</value> 
+		</property> 
+	    </configuration>
+-->
+	    <arg>-D</arg>
+	    <arg>ipc.client.fallback-to-simple-auth-allowed=true</arg>
+            <arg>-overwrite</arg>
+            <arg>${nameNode}/user/centos/primary</arg>
+            <arg>${nameNode2}/tmp/</arg>
+        </distcp>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
