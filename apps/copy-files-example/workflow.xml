@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="copy-files-example">
+    <start to="copy_files_from_one_dir_to_another"/>
+    <action name="copy_files_from_one_dir_to_another">
+        <distcp xmlns="uri:oozie:distcp-action:0.2">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <arg>${nameNode}/tmp/distcp-in/*</arg>
+            <arg>${nameNode}/tmp/distcp-out/</arg>
+        </distcp>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
