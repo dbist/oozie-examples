@@ -6,14 +6,14 @@
             <job-tracker>${resourceManager}</job-tracker>
             <name-node>${nameNode}</name-node>
             <prepare>
-                <delete path="hdfs://mycluster/user/aervits/pyspark-output"/>
+                <delete path="${nameNode}/user/${wf:user()}/pyspark-output"/>
             </prepare>
             <master>yarn-cluster</master>
             <name>PySparkExample</name>
-            <jar>${nameNode}/user/${wf:user()}/oozie/pyspark/lib/counts.py</jar>
+            <jar>${nameNode}/user/${wf:user()}/oozie-examples/apps/pyspark/lib/counts.py</jar>
             <spark-opts>--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1</spark-opts>
-            <arg>hdfs://mycluster/user/aervits/examples/input-data/text/</arg>
-            <arg>hdfs://mycluster/user/aervits/pyspark-output</arg>
+            <arg>${nameNode}/user/${wf:user()}/oozie-examples/apps/pyspark/data</arg>
+            <arg>${nameNode}/user/${wf:user()}/pyspark-output</arg>
         </spark>
         <ok to="end"/>
         <error to="kill"/>
